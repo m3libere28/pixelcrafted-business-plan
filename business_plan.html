@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PixelCrafted Studio - Interactive Business Plan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        :root {
+            --primary-color: #4a90e2; /* Softer Blue */
+            --secondary-color: #f5a623; /* Warm Orange */
+            --accent-color: #50e3c2; /* Teal Accent */
+            --text-color: #333;
+            --light-text-color: #555;
+            --bg-color: #fdfdfd; /* Slightly off-white */
+            --section-bg-color: #ffffff;
+            --border-color: #e8e8e8;
+            --header-font: 'Montserrat', sans-serif;
+            --body-font: 'Lato', sans-serif;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 10px rgba(0,0,0,0.08);
+            --shadow-lg: 0 8px 20px rgba(0,0,0,0.1);
+            --border-radius: 8px;
+            --transition-speed: 0.3s;
+        }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--body-font); line-height: 1.7; margin: 0; padding: 0; background-color: var(--bg-color); color: var(--text-color); overflow-x: hidden; }
+        .container { max-width: 1100px; margin: 40px auto; padding: 0 25px; }
+        header {
+            text-align: center;
+            padding: 36px 0 18px 0;
+        }
+        header h1 {
+            font-family: var(--header-font);
+            font-size: 2.6rem;
+            color: var(--primary-color);
+            margin-bottom: 0.2em;
+        }
+        header p {
+            font-size: 1.2rem;
+            color: var(--light-text-color);
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+            background: #fff;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        nav a {
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: color var(--transition-speed);
+            padding: 18px 8px;
+            position: relative;
+        }
+        nav a.active, nav a:focus {
+            color: var(--secondary-color);
+        }
+        nav a.active::after {
+            content: '';
+            display: block;
+            margin: 4px auto 0 auto;
+            width: 18px;
+            height: 3px;
+            border-radius: 2px;
+            background: var(--secondary-color);
+        }
+        nav a:hover {
+            color: var(--accent-color);
+        }
+        section {
+            background: var(--section-bg-color);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
+            padding: 32px 28px;
+            margin-bottom: 32px;
+            border: 1px solid var(--border-color);
+        }
+        section h2 {
+            font-family: var(--header-font);
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+        .section-title i {
+            color: var(--accent-color);
+            font-size: 1.5em;
+        }
+        ul, ol {
+            margin-left: 1.3em;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 18px 0;
+        }
+        th, td {
+            padding: 10px 8px;
+            border: 1px solid var(--border-color);
+        }
+        th {
+            background: var(--primary-color);
+            color: #fff;
+            font-weight: 600;
+        }
+        tr:nth-child(even) {
+            background: #f8fafd;
+        }
+        .chart-container {
+            width: 100%;
+            max-width: 480px;
+            margin: 0 auto 18px auto;
+        }
+        .roadmap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-top: 18px;
+        }
+        .roadmap-step {
+            flex: 1 1 220px;
+            background: #f7fafe;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 18px 14px;
+            box-shadow: var(--shadow-sm);
+        }
+        .risk {
+            background: #fff7e6;
+            border-left: 5px solid var(--secondary-color);
+            padding: 12px 18px;
+            margin-bottom: 12px;
+            border-radius: var(--border-radius);
+        }
+        .appendix {
+            background: #f8fafd;
+            border-radius: var(--border-radius);
+            padding: 14px 18px;
+            margin-bottom: 18px;
+        }
+        footer {
+            text-align: center;
+            color: var(--light-text-color);
+            padding: 24px 0 12px 0;
+            font-size: 1rem;
+            margin-top: 36px;
+        }
+        @media (max-width: 700px) {
+            .container { padding: 0 8px; }
+            section { padding: 20px 8px; }
+            .chart-container { max-width: 100%; }
+            nav { flex-direction: column; gap: 12px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="animated-section">
+            <h1><i class="fas fa-lightbulb"></i> PixelCrafted Studio</h1>
+            <p>Interactive Business Plan for Creators & Small Businesses</p>
+        </header>
+        <nav id="navbar">
+            <a href="#executive-summary" class="active">Executive Summary</a>
+            <a href="#market-analysis">Market Analysis</a>
+            <a href="#product-strategy">Product Strategy</a>
+            <a href="#ai-integration">AI Integration</a>
+            <a href="#marketing">Marketing</a>
+            <a href="#operations">Operations</a>
+            <a href="#financials">Financials</a>
+            <a href="#roadmap">Roadmap</a>
+            <a href="#risks">Risks</a>
+            <a href="#appendices">Appendices</a>
+        </nav>
+        <section id="executive-summary">
+            <div class="section-title"><i class="fas fa-rocket"></i><h2>Executive Summary</h2></div>
+            <p>PixelCrafted Studio is a digital platform empowering creators and small businesses to design, prototype, and launch visually stunning digital products with ease. Our mission is to democratize high-quality design and development, leveraging AI to streamline workflows and reduce barriers to entry.</p>
+        </section>
+        <section id="market-analysis">
+            <div class="section-title"><i class="fas fa-chart-line"></i><h2>Market Analysis</h2></div>
+            <ul>
+                <li><strong>Target Audience:</strong> Indie creators, small businesses, startups, educators.</li>
+                <li><strong>Market Trends:</strong> Rapid growth in no-code/low-code tools, increasing demand for digital presence, AI-driven design solutions.</li>
+                <li><strong>Competitors:</strong> Canva, Figma, Webflow, Wix, Adobe Express.</li>
+            </ul>
+            <div class="chart-container">
+                <canvas id="marketChart"></canvas>
+            </div>
+        </section>
+        <section id="product-strategy">
+            <div class="section-title"><i class="fas fa-cubes"></i><h2>Product Strategy</h2></div>
+            <ol>
+                <li>Modular design system for rapid prototyping</li>
+                <li>Template marketplace for various industries</li>
+                <li>Drag-and-drop editor with real-time preview</li>
+                <li>Collaboration tools for teams</li>
+                <li>Export to multiple formats (web, mobile, print)</li>
+            </ol>
+        </section>
+        <section id="ai-integration">
+            <div class="section-title"><i class="fas fa-robot"></i><h2>AI Integration</h2></div>
+            <ul>
+                <li>AI-powered design suggestions</li>
+                <li>Automated asset generation (images, icons, text)</li>
+                <li>Smart layout and color palette recommendations</li>
+                <li>Content optimization for accessibility and SEO</li>
+            </ul>
+        </section>
+        <section id="marketing">
+            <div class="section-title"><i class="fas fa-bullhorn"></i><h2>Marketing Plan</h2></div>
+            <ul>
+                <li>Content marketing (tutorials, webinars, blogs)</li>
+                <li>Partnerships with creator communities</li>
+                <li>Social media campaigns</li>
+                <li>Referral and affiliate programs</li>
+                <li>Early adopter incentives</li>
+            </ul>
+        </section>
+        <section id="operations">
+            <div class="section-title"><i class="fas fa-cogs"></i><h2>Operations Plan</h2></div>
+            <ol>
+                <li>Lean, remote-first team structure</li>
+                <li>Agile development cycles</li>
+                <li>Cloud-based infrastructure (scalable, secure)</li>
+                <li>Customer support via chat and email</li>
+                <li>Continuous feedback loop with users</li>
+            </ol>
+        </section>
+        <section id="financials">
+            <div class="section-title"><i class="fas fa-dollar-sign"></i><h2>Financial Projections</h2></div>
+            <table>
+                <thead>
+                    <tr><th>Year</th><th>Revenue</th><th>Expenses</th><th>Profit</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>2025</td><td>$120,000</td><td>$80,000</td><td>$40,000</td></tr>
+                    <tr><td>2026</td><td>$250,000</td><td>$140,000</td><td>$110,000</td></tr>
+                    <tr><td>2027</td><td>$400,000</td><td>$220,000</td><td>$180,000</td></tr>
+                </tbody>
+            </table>
+            <div class="chart-container">
+                <canvas id="financeChart"></canvas>
+            </div>
+        </section>
+        <section id="roadmap">
+            <div class="section-title"><i class="fas fa-road"></i><h2>Product Roadmap</h2></div>
+            <div class="roadmap">
+                <div class="roadmap-step"><strong>Q2 2025:</strong> MVP Launch</div>
+                <div class="roadmap-step"><strong>Q3 2025:</strong> AI Features Beta</div>
+                <div class="roadmap-step"><strong>Q4 2025:</strong> Marketplace Expansion</div>
+                <div class="roadmap-step"><strong>2026:</strong> Mobile App & API</div>
+            </div>
+        </section>
+        <section id="risks">
+            <div class="section-title"><i class="fas fa-exclamation-triangle"></i><h2>Risks & Mitigation</h2></div>
+            <div class="risk"><strong>Competition:</strong> Focus on niche features and community engagement.</div>
+            <div class="risk"><strong>Tech Challenges:</strong> Invest in robust infrastructure and testing.</div>
+            <div class="risk"><strong>Market Adoption:</strong> Early user incentives and partnerships.</div>
+        </section>
+        <section id="appendices">
+            <div class="section-title"><i class="fas fa-paperclip"></i><h2>Appendices</h2></div>
+            <div class="appendix">
+                <strong>Team:</strong> Jane Doe (Founder/CEO), John Smith (CTO), Sarah Lee (Design Lead)
+            </div>
+            <div class="appendix">
+                <strong>Contact:</strong> hello@pixelcrafted.studio
+            </div>
+        </section>
+    </div>
+    <footer>
+        <p>© 2025 PixelCrafted Studio | All Rights Reserved</p>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Smooth scroll and active nav highlight
+            const navLinks = document.querySelectorAll('nav a');
+            const sections = Array.from(navLinks).map(link => document.querySelector(link.getAttribute('href')));
+            function onScroll() {
+                let scrollPos = document.documentElement.scrollTop || document.body.scrollTop;
+                let offset = 120;
+                let current = sections[0];
+                for (let i = 0; i < sections.length; i++) {
+                    if (sections[i].offsetTop - offset <= scrollPos) {
+                        current = sections[i];
+                    }
+                }
+                navLinks.forEach(link => link.classList.remove('active'));
+                let activeLink = Array.from(navLinks).find(link => link.getAttribute('href') === '#' + current.id);
+                if (activeLink) activeLink.classList.add('active');
+            }
+            window.addEventListener('scroll', onScroll);
+            onScroll();
+            // Smooth scroll
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        window.scrollTo({
+                            top: target.offsetTop - 60,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            // Market Analysis Chart
+            new Chart(document.getElementById('marketChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['Canva', 'Figma', 'Webflow', 'Wix', 'Adobe Express', 'PixelCrafted'],
+                    datasets: [{
+                        label: 'Market Share (%)',
+                        data: [32, 18, 14, 12, 10, 4],
+                        backgroundColor: [
+                            '#4a90e2', '#f5a623', '#50e3c2', '#b8e986', '#bd10e0', '#7ed6df'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { display: false } },
+                    scales: { y: { beginAtZero: true } }
+                }
+            });
+            // Financial Projections Chart
+            new Chart(document.getElementById('financeChart'), {
+                type: 'line',
+                data: {
+                    labels: ['2025', '2026', '2027'],
+                    datasets: [
+                        {
+                            label: 'Revenue',
+                            data: [120000, 250000, 400000],
+                            borderColor: '#4a90e2', backgroundColor: 'rgba(74,144,226,0.08)', fill: true
+                        },
+                        {
+                            label: 'Expenses',
+                            data: [80000, 140000, 220000],
+                            borderColor: '#f5a623', backgroundColor: 'rgba(245,166,35,0.08)', fill: true
+                        },
+                        {
+                            label: 'Profit',
+                            data: [40000, 110000, 180000],
+                            borderColor: '#50e3c2', backgroundColor: 'rgba(80,227,194,0.08)', fill: true
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { position: 'bottom' } },
+                    scales: { y: { beginAtZero: true } }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PixelCrafted Studio - Interactive Business Plan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        :root {
+            --primary-color: #4a90e2; /* Softer Blue */
+            --secondary-color: #f5a623; /* Warm Orange */
+            --accent-color: #50e3c2; /* Teal Accent */
+            --text-color: #333;
+            --light-text-color: #555;
+            --bg-color: #fdfdfd; /* Slightly off-white */
+            --section-bg-color: #ffffff;
+            --border-color: #e8e8e8;
+            --header-font: 'Montserrat', sans-serif;
+            --body-font: 'Lato', sans-serif;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 10px rgba(0,0,0,0.08);
+            --shadow-lg: 0 8px 20px rgba(0,0,0,0.1);
+            --border-radius: 8px;
+            --transition-speed: 0.3s;
+        }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--body-font); line-height: 1.7; margin: 0; padding: 0; background-color: var(--bg-color); color: var(--text-color); overflow-x: hidden; }
+        .container { max-width: 1100px; margin: 40px auto; padding: 0 25px; }
+        header {
+            text-align: center;
+            padding: 36px 0 18px 0;
+        }
+        header h1 {
+            font-family: var(--header-font);
+            font-size: 2.6rem;
+            color: var(--primary-color);
+            margin-bottom: 0.2em;
+        }
+        header p {
+            font-size: 1.2rem;
+            color: var(--light-text-color);
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        nav a {
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: color var(--transition-speed);
+        }
+        nav a:hover {
+            color: var(--secondary-color);
+        }
+        nav a.active {
+            color: var(--secondary-color);
+        }
+        section {
+            background: var(--section-bg-color);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
+            padding: 32px 28px;
+            margin-bottom: 32px;
+            border: 1px solid var(--border-color);
+        }
+        section h2 {
+            font-family: var(--header-font);
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+        .section-title i {
+            color: var(--accent-color);
+            font-size: 1.5em;
+        }
+        ul, ol {
+            margin-left: 1.3em;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 18px 0;
+        }
+        th, td {
+            padding: 10px 8px;
+            border: 1px solid var(--border-color);
+        }
+        th {
+            background: var(--primary-color);
+            color: #fff;
+            font-weight: 600;
+        }
+        tr:nth-child(even) {
+            background: #f8fafd;
+        }
+        .chart-container {
+            width: 100%;
+            max-width: 480px;
+            margin: 0 auto 18px auto;
+        }
+        .roadmap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-top: 18px;
+        }
+        .roadmap-step {
+            flex: 1 1 220px;
+            background: #f7fafe;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 18px 14px;
+            box-shadow: var(--shadow-sm);
+        }
+        .risk {
+            background: #fff7e6;
+            border-left: 5px solid var(--secondary-color);
+            padding: 12px 18px;
+            margin-bottom: 12px;
+            border-radius: var(--border-radius);
+        }
+        .appendix {
+            background: #f8fafd;
+            border-radius: var(--border-radius);
+            padding: 14px 18px;
+            margin-bottom: 18px;
+        }
+        footer {
+            text-align: center;
+            color: var(--light-text-color);
+            padding: 24px 0 12px 0;
+            font-size: 1rem;
+            margin-top: 36px;
+        }
+        @media (max-width: 700px) {
+            .container { padding: 0 8px; }
+            section { padding: 20px 8px; }
+            .chart-container { max-width: 100%; }
+            nav { flex-direction: column; gap: 12px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="animated-section">
+            <h1><i class="fas fa-lightbulb"></i> PixelCrafted Studio</h1>
+            <p>Interactive Business Plan for Creators & Small Businesses</p>
+        </header>
+        <nav id="navbar">
+            <a href="#executive-summary" class="active">Executive Summary</a>
+            <a href="#market-analysis">Market Analysis</a>
+            <a href="#product-strategy">Product Strategy</a>
+            <a href="#ai-integration">AI Integration</a>
+            <a href="#marketing">Marketing</a>
+            <a href="#operations">Operations</a>
+            <a href="#financials">Financials</a>
+            <a href="#roadmap">Roadmap</a>
+            <a href="#risks">Risks</a>
+            <a href="#appendices">Appendices</a>
+        </nav>
+        <section id="executive-summary">
+            <div class="section-title"><i class="fas fa-rocket"></i><h2>Executive Summary</h2></div>
+            <p>PixelCrafted Studio is a digital platform empowering creators and small businesses to design, prototype, and launch visually stunning digital products with ease. Our mission is to democratize high-quality design and development, leveraging AI to streamline workflows and reduce barriers to entry.</p>
+        </section>
+        <section id="market-analysis">
+            <div class="section-title"><i class="fas fa-chart-line"></i><h2>Market Analysis</h2></div>
+            <ul>
+                <li><strong>Target Audience:</strong> Indie creators, small businesses, startups, educators.</li>
+                <li><strong>Market Trends:</strong> Rapid growth in no-code/low-code tools, increasing demand for digital presence, AI-driven design solutions.</li>
+                <li><strong>Competitors:</strong> Canva, Figma, Webflow, Wix, Adobe Express.</li>
+            </ul>
+            <div class="chart-container">
+                <canvas id="marketChart"></canvas>
+            </div>
+        </section>
+        <section id="product-strategy">
+            <div class="section-title"><i class="fas fa-cubes"></i><h2>Product Strategy</h2></div>
+            <ol>
+                <li>Modular design system for rapid prototyping</li>
+                <li>Template marketplace for various industries</li>
+                <li>Drag-and-drop editor with real-time preview</li>
+                <li>Collaboration tools for teams</li>
+                <li>Export to multiple formats (web, mobile, print)</li>
+            </ol>
+        </section>
+        <section id="ai-integration">
+            <div class="section-title"><i class="fas fa-robot"></i><h2>AI Integration</h2></div>
+            <ul>
+                <li>AI-powered design suggestions</li>
+                <li>Automated asset generation (images, icons, text)</li>
+                <li>Smart layout and color palette recommendations</li>
+                <li>Content optimization for accessibility and SEO</li>
+            </ul>
+        </section>
+        <section id="marketing">
+            <div class="section-title"><i class="fas fa-bullhorn"></i><h2>Marketing Plan</h2></div>
+            <ul>
+                <li>Content marketing (tutorials, webinars, blogs)</li>
+                <li>Partnerships with creator communities</li>
+                <li>Social media campaigns</li>
+                <li>Referral and affiliate programs</li>
+                <li>Early adopter incentives</li>
+            </ul>
+        </section>
+        <section id="operations">
+            <div class="section-title"><i class="fas fa-cogs"></i><h2>Operations Plan</h2></div>
+            <ol>
+                <li>Lean, remote-first team structure</li>
+                <li>Agile development cycles</li>
+                <li>Cloud-based infrastructure (scalable, secure)</li>
+                <li>Customer support via chat and email</li>
+                <li>Continuous feedback loop with users</li>
+            </ol>
+        </section>
+        <section id="financials">
+            <div class="section-title"><i class="fas fa-dollar-sign"></i><h2>Financial Projections</h2></div>
+            <table>
+                <thead>
+                    <tr><th>Year</th><th>Revenue</th><th>Expenses</th><th>Profit</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>2025</td><td>$120,000</td><td>$80,000</td><td>$40,000</td></tr>
+                    <tr><td>2026</td><td>$250,000</td><td>$140,000</td><td>$110,000</td></tr>
+                    <tr><td>2027</td><td>$400,000</td><td>$220,000</td><td>$180,000</td></tr>
+                </tbody>
+            </table>
+            <div class="chart-container">
+                <canvas id="financeChart"></canvas>
+            </div>
+        </section>
+        <section id="roadmap">
+            <div class="section-title"><i class="fas fa-road"></i><h2>Product Roadmap</h2></div>
+            <div class="roadmap">
+                <div class="roadmap-step"><strong>Q2 2025:</strong> MVP Launch</div>
+                <div class="roadmap-step"><strong>Q3 2025:</strong> AI Features Beta</div>
+                <div class="roadmap-step"><strong>Q4 2025:</strong> Marketplace Expansion</div>
+                <div class="roadmap-step"><strong>2026:</strong> Mobile App & API</div>
+            </div>
+        </section>
+        <section id="risks">
+            <div class="section-title"><i class="fas fa-exclamation-triangle"></i><h2>Risks & Mitigation</h2></div>
+            <div class="risk"><strong>Competition:</strong> Focus on niche features and community engagement.</div>
+            <div class="risk"><strong>Tech Challenges:</strong> Invest in robust infrastructure and testing.</div>
+            <div class="risk"><strong>Market Adoption:</strong> Early user incentives and partnerships.</div>
+        </section>
+        <section id="appendices">
+            <div class="section-title"><i class="fas fa-paperclip"></i><h2>Appendices</h2></div>
+            <div class="appendix">
+                <strong>Team:</strong> Jane Doe (Founder/CEO), John Smith (CTO), Sarah Lee (Design Lead)
+            </div>
+            <div class="appendix">
+                <strong>Contact:</strong> hello@pixelcrafted.studio
+            </div>
+        </section>
+    </div>
+    <footer>
+        <p> 2025 PixelCrafted Studio | All Rights Reserved</p>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Market Analysis Chart
+            new Chart(document.getElementById('marketChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['Canva', 'Figma', 'Webflow', 'Wix', 'Adobe Express', 'PixelCrafted'],
+                    datasets: [{
+                        label: 'Market Share (%)',
+                        data: [32, 18, 14, 12, 10, 4],
+                        backgroundColor: [
+                            '#4a90e2', '#f5a623', '#50e3c2', '#b8e986', '#bd10e0', '#7ed6df'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { display: false } },
+                    scales: { y: { beginAtZero: true } }
+                }
+            });
+            // Financial Projections Chart
+            new Chart(document.getElementById('financeChart'), {
+                type: 'line',
+                data: {
+                    labels: ['2025', '2026', '2027'],
+                    datasets: [
+                        {
+                            label: 'Revenue',
+                            data: [120000, 250000, 400000],
+                            borderColor: '#4a90e2', backgroundColor: 'rgba(74,144,226,0.08)', fill: true
+                        },
+                        {
+                            label: 'Expenses',
+                            data: [80000, 140000, 220000],
+                            borderColor: '#f5a623', backgroundColor: 'rgba(245,166,35,0.08)', fill: true
+                        },
+                        {
+                            label: 'Profit',
+                            data: [40000, 110000, 180000],
+                            borderColor: '#50e3c2', backgroundColor: 'rgba(80,227,194,0.08)', fill: true
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { position: 'bottom' } },
+                    scales: { y: { beginAtZero: true } }
+                }
+            });
+            // Add event listener to navbar links
+            document.querySelectorAll('#navbar a').forEach(link => {
+                link.addEventListener('click', () => {
+                    // Remove active class from all links
+                    document.querySelectorAll('#navbar a').forEach(a => a.classList.remove('active'));
+                    // Add active class to clicked link
+                    link.classList.add('active');
+                });
+                link.classList.add('active');
+            });
+    <title>PixelCrafted Studio - Interactive Business Plan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #f5a623;
+            --accent-color: #50e3c2;
+            --text-color: #333;
+            --light-text-color: #555;
+            --bg-color: #fdfdfd;
+            --section-bg-color: #ffffff;
+            --border-color: #e8e8e8;
+            --header-font: 'Montserrat', sans-serif;
+            --body-font: 'Lato', sans-serif;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 10px rgba(0,0,0,0.08);
+            --shadow-lg: 0 8px 20px rgba(0,0,0,0.1);
+            --border-radius: 8px;
+            --transition-speed: 0.3s;
+        }
+        /* ... (insert all user-provided CSS here) ... */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Insert all user-provided HTML content, sections, and structure here -->
+    </div>
+    <footer>
+        <p>© 2025 PixelCrafted Studio | All Rights Reserved</p>
+    </footer>
+    <script>
+        // Insert all user-provided JavaScript for charts and interactivity here
+    </script>
+</body>
+</html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PixelCrafted Studio - Interactive Business Plan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>        :root {            --primary-color: #4a90e2; /* Softer Blue */            --secondary-color: #f5a623; /* Warm Orange */            --accent-color: #50e3c2; /* Teal Accent */            --text-color: #333;            --light-text-color: #555;            --bg-color: #fdfdfd; /* Slightly off-white */            --section-bg-color: #ffffff;            --border-color: #e8e8e8;            --header-font: 'Montserrat', sans-serif;            --body-font: 'Lato', sans-serif;            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);            --shadow-md: 0 4px 10px rgba(0,0,0,0.08);            --shadow-lg: 0 8px 20px rgba(0,0,0,0.1);            --border-radius: 8px;            --transition-speed: 0.3s;        }        /* ... (CSS omitted for brevity) ... */    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <header class="animated-section"> <h1><i class="fas fa-lightbulb"></i> PixelCrafted Studio</h1>
+            <h2><i class="fas fa-file-alt"></i> AI-Powered Digital Products Business Plan</h2>
+            <img src="https://placehold.co/900x250/4a90e2/ffffff?text=PixelCrafted+Studio+Concept" alt="PixelCrafted Studio Banner" class="placeholder-img">
+        </header>
+
+        <hr>
+
+        <!-- ... (rest of the HTML provided by the user, including all sections, charts, and scripts) ... -->
+
+    </div><footer>
+        <p>© 2025 PixelCrafted Studio | All Rights Reserved</p>
+    </footer>
+
+    <script>
+        // Wait for the DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            // ... (JavaScript for charts and interactivity as provided by the user) ...
+        });
+    </script>
+</body>
+</html>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        :root {
+            --primary-color: #4a90e2; /* Softer Blue */
+            --secondary-color: #f5a623; /* Warm Orange */
+            --accent-color: #50e3c2; /* Teal Accent */
+            --text-color: #333;
+            --light-text-color: #555;
+            --bg-color: #fdfdfd; /* Slightly off-white */
+            --section-bg-color: #ffffff;
+            --border-color: #e8e8e8;
+            --header-font: 'Montserrat', sans-serif;
+            --body-font: 'Lato', sans-serif;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 10px rgba(0,0,0,0.08);
+            --shadow-lg: 0 8px 20px rgba(0,0,0,0.1);
+            --border-radius: 8px;
+            --transition-speed: 0.3s;
+        }
+
+        /* Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--body-font);
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+
+        .container {
+            max-width: 1100px; /* Slightly wider */
+            margin: 40px auto;
+            padding: 0 25px;
+        }
+
+        /* Headings Styling */
+        h1, h2, h3 {
+            font-family: var(--header-font);
+            color: var(--primary-color);
+            margin-bottom: 0.6em;
+            font-weight: 700;
+        }
+
+        h1 {
+            font-size: 3em;
+            text-align: center;
+            margin-bottom: 1.2em;
+            color: #2c3e50; /* Darker blue-grey for main title */
+        }
+
+        h2 {
+            font-size: 2.2em;
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 12px;
+            margin-top: 3em;
+            margin-bottom: 1.5em;
+            font-weight: 600;
+            display: flex; /* For icon alignment */
+            align-items: center;
+        }
+
+        h3 {
+            font-size: 1.6em;
+            color: var(--light-text-color);
+            margin-top: 2em;
+            margin-bottom: 1em;
+            font-weight: 600;
+            border-left: 4px solid var(--secondary-color);
+            padding-left: 10px;
+        }
+
+        /* Icons next to H2 */
+        h2 i.fas {
+            margin-right: 15px;
+            font-size: 0.9em;
+            color: var(--primary-color);
+            opacity: 0.8;
+        }
+
+        /* Placeholder Image Styling */
+        img.placeholder-img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 35px 0;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            box-shadow: var(--shadow-md);
+            background-color: #fff;
+            border-radius: var(--border-radius);
+            overflow: hidden; /* Clip shadow */
+        }
+
+        th, td {
+            border: none; /* Remove default borders */
+            border-bottom: 1px solid var(--border-color); /* Use bottom borders */
+            padding: 15px 18px;
+            text-align: left;
+            transition: background-color var(--transition-speed) ease;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: white;
+            font-family: var(--header-font);
+            font-weight: 600;
+            font-size: 1.05em;
+        }
+
+        /* Table Row Hover Effect */
+        tbody tr:hover {
+            background-color: #eef5fc; /* Lighter blue hover */
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none; /* Remove border on last row */
+        }
+
+        /* Horizontal Rule */
+        hr {
+            border: 0;
+            height: 1px;
+            background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));
+            margin: 70px 0;
+        }
+
+        /* List Styling */
+        ul, ol {
+            margin-left: 25px;
+            padding-left: 15px;
+            margin-bottom: 1.2em;
+        }
+
+        li {
+            margin-bottom: 0.8em;
+            color: var(--light-text-color);
+        }
+        li strong {
+             color: var(--text-color); /* Make strong text stand out more */
+        }
+        /* Add icons to key objective list items */
+        .key-objectives li {
+            list-style: none; /* Remove default bullet */
+            position: relative;
+            padding-left: 25px;
+        }
+        .key-objectives li::before {
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            content: "\f058"; /* Check circle icon */
+            color: var(--accent-color);
+            position: absolute;
+            left: 0;
+            top: 2px;
+            font-size: 0.9em;
+        }
+
+        strong {
+            font-weight: 700;
+            color: var(--text-color);
+        }
+
+        /* Chart Container Styling */
+        .chart-container {
+            position: relative;
+            margin: 40px auto;
+            padding: 25px;
+            border-radius: var(--border-radius);
+            background-color: var(--section-bg-color);
+            box-shadow: var(--shadow-md);
+            max-width: 700px; /* Wider charts */
+            height: 400px; /* Default height */
+        }
+
+        /* Product Showcase Styling - More Creative */
+        .product-showcase-section {
+             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); /* Subtle gradient background */
+             padding: 40px 0;
+             margin-top: 2em;
+             border-radius: var(--border-radius);
+        }
+
+        .product-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Adjust minmax */
+            gap: 35px;
+            margin-top: 20px;
+            padding: 0 20px; /* Padding inside the section */
+        }
+
+        .product-card {
+            background-color: #fff;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+            position: relative; /* Needed for overlay */
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 220px; /* Slightly taller images */
+            overflow: hidden; /* Ensure image zoom stays contained */
+            position: relative;
+        }
+
+         .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+            display: block; /* Remove potential space below image */
+         }
+
+         .product-card:hover .product-image img {
+             transform: scale(1.1); /* Zoom effect on hover */
+         }
+
+         /* Image Overlay Effect */
+         .product-image::after {
+             content: '';
+             position: absolute;
+             top: 0;
+             left: 0;
+             width: 100%;
+             height: 100%;
+             background: linear-gradient(to top, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0) 60%); /* Subtle gradient overlay */
+             opacity: 0;
+             transition: opacity var(--transition-speed) ease;
+         }
+         .product-card:hover .product-image::after {
+             opacity: 1;
+         }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-title {
+            font-family: var(--header-font);
+            font-size: 1.3em;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 12px;
+        }
+
+        .product-description {
+            font-size: 0.95em;
+            margin-bottom: 18px;
+            color: var(--light-text-color);
+            min-height: 50px; /* Ensure consistent height */
+        }
+
+        .product-price {
+            font-size: 1.2em;
+            font-weight: 700;
+            color: var(--secondary-color);
+            display: block; /* Ensure it takes full width */
+            text-align: right;
+        }
+
+        /* Footer Styling */
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 30px;
+            color: #999;
+            font-size: 0.9em;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Animation for Sections - Fade In */
+        .animated-section {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .animated-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <header class="animated-section"> <h1><i class="fas fa-lightbulb"></i> PixelCrafted Studio</h1>
+            <h2><i class="fas fa-file-alt"></i> AI-Powered Digital Products Business Plan</h2>
+            <img src="https://placehold.co/900x250/4a90e2/ffffff?text=PixelCrafted+Studio+Concept" alt="PixelCrafted Studio Banner" class="placeholder-img">
+        </header>
+
+        <hr>
+
+        <section id="executive-summary" class="animated-section"> <h2><i class="fas fa-bullseye"></i> 1. EXECUTIVE SUMMARY</h2>
+            <p><strong>Business Concept:</strong> PixelCrafted Studio will leverage artificial intelligence to create, market, and sell high-demand digital products on Etsy and later expand to additional platforms.</p>
+            <p><strong>Vision Statement:</strong> To empower creators and small businesses with thoughtfully designed digital tools that enhance productivity, creativity, and joy.</p>
+            <p><strong>Mission Statement:</strong> Deliver innovative, aesthetically pleasing digital products that solve real problems for our customers while utilizing AI to maintain quality and scale efficiently.</p>
+            <p><strong>Founder:</strong> Experienced graphic designer with 10-20 hours per week availability and initial $1,000 investment.</p>
+            <p><strong>Unique Value Proposition:</strong> PixelCrafted Studio differentiates through:</p>
+            <ul>
+                <li><i class="fas fa-star fa-xs" style="color: var(--secondary-color); margin-right: 5px;"></i> Specialized focus on ADHD-friendly productivity tools</li>
+                <li><i class="fas fa-star fa-xs" style="color: var(--secondary-color); margin-right: 5px;"></i> AI-enhanced personalization capabilities</li>
+                <li><i class="fas fa-star fa-xs" style="color: var(--secondary-color); margin-right: 5px;"></i> Minimalist aesthetic with premium design quality</li>
+                <li><i class="fas fa-star fa-xs" style="color: var(--secondary-color); margin-right: 5px;"></i> Automation of creation, listing, and customer support.</li>
+            </ul>
+            <p><strong>Key Objectives:</strong></p>
+            <ul class="key-objectives"> <li>Achieve profitability by month 4.</li>
+                <li>Generate $13,000 in revenue by month 12.</li>
+                <li>Establish a 4.8+ star rating with 500+ reviews by year end</li>
+                <li>Build an email list of 2,500+ subscribers</li>
+            </ul>
+        </section>
+
+        <hr>
+
+        <section id="market-analysis" class="animated-section"> <h2><i class="fas fa-chart-line"></i> 2. MARKET ANALYSIS</h2>
+            <h3><i class="fas fa-industry fa-xs" style="margin-right: 8px;"></i> Industry Overview</h3>
+            <p>The digital products market continues to experience robust growth, with Etsy maintaining its position as a premier marketplace for creative digital goods. With over 96 million active buyers and a marketplace revenue exceeding $2.8 billion in 2024, Etsy represents an ideal platform for launching digital product businesses.</p>
+            <h3><i class="fas fa-users fa-xs" style="margin-right: 8px;"></i> Target Market Profile</h3>
+            <p>PixelCrafted Studio will focus on three key customer segments:</p>
+            <ol>
+                 <li><strong>Productivity Enthusiasts (Primary)</strong><ul><li>Age: 25-45</li><li>Gender: 75% female, 25% male</li><li>Characteristics: Busy professionals, parents, students with ADHD/focus challenges</li><li>Pain points: Overwhelm, disorganization, difficulty maintaining systems</li></ul></li>
+                 <li><strong>Small Business Owners</strong><ul><li>Age: 28-55</li><li>Characteristics: Entrepreneurs, freelancers, small teams</li><li>Pain points: Limited design resources, brand inconsistency, time constraints</li></ul></li>
+                 <li><strong>Home Organization Enthusiasts</strong><ul><li>Age: 30-65</li><li>Characteristics: Homemakers, working parents, retirees</li><li>Pain points: Paper clutter, managing household tasks, seasonal organization</li></ul></li>
+            </ol>
+
+            <h3><i class="fas fa-search-dollar fa-xs" style="margin-right: 8px;"></i> Competitive Analysis</h3>
+            <table>
+                <thead><tr><th><i class="fas fa-chess-knight"></i> Competitor Category</th><th><i class="fas fa-thumbs-up"></i> Strengths</th><th><i class="fas fa-thumbs-down"></i> Weaknesses</th><th><i class="fas fa-rocket"></i> Our Advantage</th></tr></thead>
+                <tbody>
+                    <tr><td>Established Etsy Sellers</td><td>Brand recognition, Reviews</td><td>Often generic designs, Limited personalization</td><td>AI customization, ADHD-specific niche</td></tr>
+                    <tr><td>Large Digital Template Companies</td><td>Wide selection, Professional design</td><td>Higher prices, Less specialized</td><td>Focused product strategy, Automation reducing costs</td></tr>
+                    <tr><td>Solo Creators</td><td>Unique aesthetics, Loyal fans</td><td>Inconsistent quality, Limited SKUs</td><td>AI consistency, Scalable production</td></tr>
+                </tbody>
+            </table>
+
+            <h3><i class="fas fa-fire fa-xs" style="margin-right: 8px;"></i> Market Trends & Category Popularity</h3>
+             <div class="chart-container">
+                <canvas id="categoryPopularityChart"></canvas>
+            </div>
+            <p>The digital product marketplace is evolving with several key trends that PixelCrafted Studio will capitalize on:</p>
+            <ul>
+                <li><i class="fas fa-check fa-xs" style="color: var(--accent-color); margin-right: 5px;"></i> Increased demand for personalized products</li>
+                <li><i class="fas fa-check fa-xs" style="color: var(--accent-color); margin-right: 5px;"></i> Growing awareness and acceptance of ADHD and neurodiversity</li>
+                <li><i class="fas fa-check fa-xs" style="color: var(--accent-color); margin-right: 5px;"></i> Preference for minimalist design aesthetics</li>
+                <li><i class="fas fa-check fa-xs" style="color: var(--accent-color); margin-right: 5px;"></i> Rising comfort with AI-generated content</li>
+                <li><i class="fas fa-check fa-xs" style="color: var(--accent-color); margin-right: 5px;"></i> Shift toward sustainable/paperless solutions</li>
+            </ul>
+        </section>
+
+        <hr>
+
+         <section id="product-strategy" class="animated-section"> <h2><i class="fas fa-cubes"></i> 3. PRODUCT STRATEGY</h2>
+            <h3><i class="fas fa-box-open fa-xs" style="margin-right: 8px;"></i> Product Line Focus</h3>
+             <p>Instead of launching with five product categories simultaneously, PixelCrafted will focus initially on two high-demand, high-margin categories:</p>
+             <p><strong>Phase 1 (Months 1-3): Core Products</strong></p><ol><li><strong>ADHD-Optimized Planners & Productivity Tools</strong><ul><li>Daily focus planners with dopamine tracking</li><li>Task batching templates for executive function support</li><li>Time-blocking systems with visual cues</li><li>Habit trackers with variable reward systems</li></ul></li><li><strong>Minimalist Social Media Templates</strong><ul><li>Instagram carousel templates (educational focus)</li><li>Pinterest pin templates (productivity/organization themes)</li><li>Content planning systems</li><li>Caption frameworks and prompts</li></ul></li></ol>
+             <p><strong>Phase 2 (Months 4-6): Expansion Products</strong></p><ol><li><strong>Wall Art Collections</strong><ul><li>Minimalist abstract prints</li><li>Productivity affirmations</li><li>Focus-enhancing mandalas</li></ul></li><li><strong>Basic Branding Kits</strong><ul><li>Logo templates for solopreneurs</li><li>Color palette guides</li><li>Social media profile templates</li></ul></li></ol>
+
+            <h3><i class="fas fa-cogs fa-xs" style="margin-right: 8px;"></i> Product Development Process</h3>
+            <img src="https://placehold.co/800x300/a8d5e2/ffffff?text=Product+Development+Process" alt="AI-Enhanced Product Creation Workflow Placeholder" class="placeholder-img">
+            <ol><li><strong>Market Research Phase</strong><ul><li>AI-powered trend analysis using Etsy search data</li><li>Competitor product feature analysis</li><li>Customer review sentiment analysis</li></ul></li><li><strong>Design Phase</strong><ul><li>AI-assisted color palette and typography selection</li><li>Template structure generation</li><li>Designer refinement and quality enhancement</li></ul></li><li><strong>Testing Phase</strong><ul><li>A/B listing test variants</li><li>Limited-release products</li><li>Customer feedback integration</li></ul></li><li><strong>Full Launch Phase</strong><ul><li>Optimized listing deployment</li><li>Bundle creation</li><li>Marketing automation</li></ul></li></ol>
+        </section>
+
+        <hr>
+
+        <section class="product-showcase-section animated-section">
+            <div class="container"> <h2 style="border: none; justify-content: center;"><i class="fas fa-shopping-bag"></i> Product Showcase (Examples)</h2>
+                 <p style="text-align: center; max-width: 700px; margin: 0 auto 40px auto;">Below are examples representing the types of products PixelCrafted Studio will offer. Actual products will feature unique AI-assisted designs within these categories.</p>
+
+                <div class="product-showcase">
+                    <div class="product-card">
+                        <div class="product-image">
+                             <img src="https://placehold.co/300x220/f5a623/ffffff?text=Planner+Mockup" alt="ADHD Planner Mockup">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-title">ADHD Daily Focus Planner</div>
+                            <div class="product-description">Minimalist daily planner designed for focus, task management, and dopamine tracking. Printable PDF & Digital versions.</div>
+                            <div class="product-price">$9.99</div>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-image">
+                             <img src="https://placehold.co/300x220/4a90e2/ffffff?text=Template+Mockup" alt="Instagram Template Mockup">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-title">Minimalist Instagram Carousel Pack</div>
+                            <div class="product-description">Set of 10 customizable Canva templates for educational or promotional Instagram carousels.</div>
+                            <div class="product-price">$14.99</div>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                         <div class="product-image">
+                             <img src="https://placehold.co/300x220/50e3c2/ffffff?text=Wall+Art+Mockup" alt="Wall Art Mockup">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-title">Abstract Focus Wall Art</div>
+                            <div class="product-description">Set of 3 high-resolution printable wall art prints in a calming, minimalist abstract style. Multiple sizes included.</div>
+                            <div class="product-price">$7.99</div>
+                        </div>
+                    </div>
+
+                     <div class="product-card">
+                         <div class="product-image">
+                             <img src="https://placehold.co/300x220/9013fe/ffffff?text=Branding+Mockup" alt="Branding Kit Mockup"> </div>
+                        <div class="product-info">
+                            <div class="product-title">Solopreneur Logo & Palette Kit</div>
+                            <div class="product-description">Easy-to-edit logo template (Canva) and coordinated color palette guide for new entrepreneurs.</div>
+                            <div class="product-price">$24.99</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <hr>
+
+        <!-- ...rest of the business plan HTML ... -->
+
+    </div><footer>
+        <p>© 2025 PixelCrafted Studio | All Rights Reserved</p>
+    </footer>
+
+    <!-- ...rest of your script ... -->
+
+</body>
+</html>
